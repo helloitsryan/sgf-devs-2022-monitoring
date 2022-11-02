@@ -31,6 +31,7 @@ app.use((req, res, next) => {
 })
 
 app.get('/metrics', async (req, res) => {
+    console.log("Metrics endpoint hit!");
     res.setHeader('Content-Type', register.contentType);
     res.send(await register.metrics());
 });
@@ -44,10 +45,12 @@ app.get('/home', (req, res, next) => {
 })
 
 app.get('/slow', (req, res, next) => {
+  const randomSleep = Math.floor(Math.random() * (350 - 100 + 1)) + 100;
+
   setTimeout(() => {
     res.status(200).send("Slow response...");
     next()
-  }, 300);
+  }, randomSleep);
 })
 
 // Runs after each requests
